@@ -13,6 +13,10 @@ A Shoes Catalog is a comprehensive, organized collection providing detailed info
 | `/shoes/:id` | `DELETE` | Delete one shoe by id |
 | `/shoes/:id` | `PUT`    | Update one shoe by id |
 
+## Database Design
+
+[https://dbdiagram.io/d/667545fb5a764b3c72108bd8](https://dbdiagram.io/d/667545fb5a764b3c72108bd8)
+
 ## Getting Started
 
 To install dependencies:
