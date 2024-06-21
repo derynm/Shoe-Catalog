@@ -1,4 +1,24 @@
-export const shoesData = [
+interface Shoe {
+  id: number;
+  brand: string;
+  model: string;
+  price: number;
+  currency: string;
+  sizes: number[];
+  colors: string[];
+  stock: number;
+  description: string;
+  release_date: string;
+  materials: string[];
+  weight: string;
+  category: string;
+  average_rating: number;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export const shoesData:Shoe[] = [
   {
     id: 1,
     brand: 'Nike',
