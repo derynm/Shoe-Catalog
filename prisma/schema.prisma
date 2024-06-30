@@ -1,0 +1,57 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shoe {
+  id           Int       @id @default(autoincrement())
+  model        String
+  price        Int
+  description  String
+  image_url    String
+  brand        Brand     @relation(fields: [brand_id], references: [id])
+  brand_id     Int
+  category     Category  @relation(fields: [category_id], references: [id])
+  category_id  Int
+  Stock        Stock[]
+}
+
+model Brand {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Shoe  Shoe[]
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Shoe  Shoe[]
+}
+
+model Color {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Stock Stock[]
+}
+
+model Size {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Stock Stock[]
+}
+
+model Stock {
+  id       Int    @id @default(autoincrement())
+  quantity Int
+  shoe     Shoe   @relation(fields: [shoe_id], references: [id])
+  shoe_id  Int
+  color    Color  @relation(fields: [color_id], references: [id])
+  color_id Int
+  size     Size   @relation(fields: [size_id], references: [id])
+  size_id  Int
+}
