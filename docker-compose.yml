@@ -5,12 +5,5 @@ services:
       context: .
     ports:
       - "3000:3000"
-    depends_on:
-      - database
-  database:
-    image: postgres:alpine
-    ports:
-      - "5433:5432"
     env_file:
       - path: .env
-        required: true

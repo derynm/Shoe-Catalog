@@ -1,19 +1,25 @@
-# Use the official Bun image from the Docker Hub
-FROM oven/bun:latest
+# Set Bun and Node version
+ARG BUN_VERSION=1.1.13
+ARG NODE_VERSION=20.12.2
+FROM imbios/bun-node:${BUN_VERSION}-${NODE_VERSION}-slim
 
-# Create and change to the app directory
-WORKDIR /usr/src/app
+# Set production environment
+ENV NODE_ENV="production"
 
-# Copy app files
+# Bun app lives here
+WORKDIR /app
+
+# Copy app files to app directory
 COPY . .
 
-# Install app dependencies
+# Install node modules
 RUN bun install
-RUN bunx db:generate
-RUN bun db:migrate:deploy
 
-# Bind the app to port 3000
-# EXPOSE 3000
+# Generate Prisma Client
+RUN bun prisma generate
 
-# Run the application
-CMD ["bun", "run", "start"]
+RUN bun prisma migrate deploy
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD [ "bun", "run", "start" ]
