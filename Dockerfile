@@ -1,5 +1,5 @@
 # Use the official Bun image from the Docker Hub
-FROM oven/bun:debian
+FROM oven/bun:latest
 
 # Create and change to the app directory
 WORKDIR /usr/src/app
@@ -9,11 +9,11 @@ COPY . .
 
 # Install app dependencies
 RUN bun install
+RUN bunx db:generate
 RUN bun db:migrate:deploy
-RUN bun db:generate
 
 # Bind the app to port 3000
-EXPOSE 3000
+# EXPOSE 3000
 
 # Run the application
 CMD ["bun", "run", "start"]
