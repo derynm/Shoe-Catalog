@@ -1,5 +1,10 @@
 import { Hono } from 'hono'
-import { prisma } from "./libs/prisma";
+
+import shoe from './routes/shoe'
+import brand from "./routes/brand"
+import category from "./routes/category"
+import color from './routes/color'
+import size from './routes/size'
 
 
 
@@ -11,45 +16,10 @@ app.get('/', (c) => {
   });
 })
 
-app.get("/shoes", async (c) => {
-  const shoes = await prisma.shoe.findMany({
-    include:{
-      brand: true,
-      category: true,
-      Stock: true
-    }
-  });
-  return c.json(shoes);
-});
-
-app.get("/shoes/:id", async (c) => {
-  const id = Number(c.req.param('id'));
-  const shoe = await prisma.shoe.findUnique({
-    where:{
-      id
-    },
-    include:{
-      brand: true,
-      category: true,
-      Stock: true
-    }
-  });
-
-  if (!shoe) {
-    return c.json({ message: "Shoe not found" }, 404);
-  }
-
-  return c.json(shoe);
-})
-app.delete("/shoes/:id", async (c) => {
-  const id = Number(c.req.param('id'));
-  const shoe = await prisma.shoe.delete({
-    where:{
-      id
-    }
-  });
-
-  return c.json(shoe);
-})
+app.route("/shoes",shoe)
+app.route("/brands",brand)
+app.route("/categories",category)
+app.route("/colors",color)
+app.route("/sizes",size)
 
 export default app
